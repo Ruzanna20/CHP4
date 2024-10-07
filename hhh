@@ -49,7 +49,6 @@ public:
             for (int c = 0; c < cols; c++) {
                 oss << data[r][c] << " "; // Append each value to the stream
             }
-            oss << "\n"; // New line for each row
         }
         return oss.str(); // Convert stream to string
     }
@@ -87,7 +86,7 @@ int main() {
 
     // Get the string representation of the matrix
     std::string matrixString = matrix.toString();
-    std::cout << "Matrix as string:\n" << matrixString << std::endl;
+    std::cout << "Matrix as string: " << matrixString << std::endl; // Print in a single line
 
     return 0;
 }
