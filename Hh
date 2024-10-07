@@ -1,0 +1,72 @@
+#include <iostream>
+#include <vector>
+
+class Matrix {
+private:
+    std::vector<std::vector<int>> data; // 2D vector to store matrix data
+    int rows, cols; // Number of rows and columns
+
+public:
+    // Constructor to initialize the matrix with given dimensions
+    Matrix(int r, int c) : rows(r), cols(c) {
+        data.resize(rows, std::vector<int>(cols, 0)); // Initialize matrix with zeros
+    }
+
+    // Method to set a value in the matrix
+    void setValue(int r, int c, int value) {
+        if (r >= 0 && r < rows && c >= 0 && c < cols) {
+            data[r][c] = value;
+        } else {
+            std::cout << "Index out of bounds!" << std::endl;
+        }
+    }
+
+    // Method to get a value from the matrix
+    int getValue(int r, int c) {
+        if (r >= 0 && r < rows && c >= 0 && c < cols) {
+            return data[r][c];
+        } else {
+            std::cout << "Index out of bounds!" << std::endl;
+            return -1; // Return -1 if index is out of bounds
+        }
+    }
+
+    // Method to display the matrix
+    void display() {
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                std::cout << data[r][c] << " ";
+            }
+            std::cout << std::endl;
+        }
+    }
+};
+
+int main() {
+    int rows, cols;
+
+    // Get matrix dimensions from user
+    std::cout << "Enter number of rows: ";
+    std::cin >> rows;
+    std::cout << "Enter number of columns: ";
+    std::cin >> cols;
+
+    // Create a Matrix object
+    Matrix matrix(rows, cols);
+
+    // Set values in the matrix
+    for (int r = 0; r < rows; r++) {
+        for (int c = 0; c < cols; c++) {
+            int value;
+            std::cout << "Enter value for position (" << r << "," << c << "): ";
+            std::cin >> value;
+            matrix.setValue(r, c, value);
+        }
+    }
+
+    // Display the matrix
+    std::cout << "The matrix is:" << std::endl;
+    matrix.display();
+
+    return 0;
+p
