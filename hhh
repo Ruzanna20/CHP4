@@ -4,19 +4,19 @@
 
 class Matrix {
 private:
-    std::vector<std::vector<int>> data; // 2D vector to store matrix data
+    std::vector<int> data; // 1D vector to store matrix data as a single column
     int rows, cols; // Number of rows and columns
 
 public:
     // Constructor to initialize the matrix with given dimensions
     Matrix(int r, int c) : rows(r), cols(c) {
-        data.resize(rows, std::vector<int>(cols, 0)); // Initialize matrix with zeros
+        data.resize(rows * cols, 0); // Initialize 1D vector with zeros
     }
 
     // Method to set a value in the matrix
     void setValue(int r, int c, int value) {
         if (r >= 0 && r < rows && c >= 0 && c < cols) {
-            data[r][c] = value;
+            data[r * cols + c] = value; // Convert 2D index to 1D
         } else {
             std::cout << "Index out of bounds!" << std::endl;
         }
@@ -25,18 +25,18 @@ public:
     // Method to get a value from the matrix
     int getValue(int r, int c) {
         if (r >= 0 && r < rows && c >= 0 && c < cols) {
-            return data[r][c];
+            return data[r * cols + c]; // Convert 2D index to 1D
         } else {
             std::cout << "Index out of bounds!" << std::endl;
             return -1; // Return -1 if index is out of bounds
         }
     }
 
-    // Method to display the matrix
+    // Method to display the matrix as a column
     void display() {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-                std::cout << data[r][c] << " ";
+                std::cout << getValue(r, c) << " ";
             }
             std::cout << std::endl;
         }
@@ -47,7 +47,7 @@ public:
         std::ostringstream oss; // Create a string stream
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-                oss << data[r][c] << " "; // Append each value to the stream
+                oss << getValue(r, c) << " "; // Append each value to the stream
             }
         }
         return oss.str(); // Convert stream to string
