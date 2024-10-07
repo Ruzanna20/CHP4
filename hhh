@@ -1,7 +1,6 @@
-#include <iostream>
+ #include <iostream>
 #include <vector>
-#include <cstdlib>  // For rand() and srand()
-#include <ctime>    // For time()
+#include <sstream> // Include stringstream for string conversion
 
 class Matrix {
 private:
@@ -33,15 +32,6 @@ public:
         }
     }
 
-    // Method to fill the matrix with random values
-    void fillWithRandomValues(int min, int max) {
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
-                data[r][c] = rand() % (max - min + 1) + min; // Random value between min and max
-            }
-        }
-    }
-
     // Method to display the matrix
     void display() {
         for (int r = 0; r < rows; r++) {
@@ -51,33 +41,53 @@ public:
             std::cout << std::endl;
         }
     }
+
+    // Method to get a string representation of the matrix
+    std::string toString() {
+        std::ostringstream oss; // Create a string stream
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                oss << data[r][c] << " "; // Append each value to the stream
+            }
+            oss << "\n"; // New line for each row
+        }
+        return oss.str(); // Convert stream to string
+    }
 };
 
 int main() {
-    int rows, cols, min, max;
+    int rows, cols;
 
-    // Seed the random number generator
-    srand(static_cast<unsigned int>(time(0)));
-
-    // Get matrix dimensions and random value range from user
+    // Get matrix dimensions from user
     std::cout << "Enter number of rows: ";
     std::cin >> rows;
     std::cout << "Enter number of columns: ";
     std::cin >> cols;
-    std::cout << "Enter minimum random value: ";
-    std::cin >> min;
-    std::cout << "Enter maximum random value: ";
-    std::cin >> max;
 
     // Create a Matrix object
     Matrix matrix(rows, cols);
 
-    // Fill the matrix with random values
-    matrix.fillWithRandomValues(min, max);
-
-    // Display the matrix
-    std::cout << "The matrix with random values is:" << std::endl;
+    // Display the default matrix
+    std::cout << "Default matrix (initialized with zeros):" << std::endl;
     matrix.display();
+
+    // Set values in the matrix
+    for (int r = 0; r < rows; r++) {
+        for (int c = 0; c < cols; c++) {
+            int value;
+            std::cout << "Enter value for position (" << r << "," << c << "): ";
+            std::cin >> value;
+            matrix.setValue(r, c, value);
+        }
+    }
+
+    // Display the updated matrix
+    std::cout << "The matrix after updates is:" << std::endl;
+    matrix.display();
+
+    // Get the string representation of the matrix
+    std::string matrixString = matrix.toString();
+    std::cout << "Matrix as string:\n" << matrixString << std::endl;
 
     return 0;
 }
